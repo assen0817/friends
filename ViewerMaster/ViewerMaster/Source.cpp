@@ -3,15 +3,13 @@
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 	if (msg == WM_LBUTTONUP) {
-		MessageBox(hwnd, TEXT("終わるにゃん"),
-			TEXT("Kitty"), MB_ICONINFORMATION);
+		MessageBox(hwnd, TEXT("終わるにゃん"), TEXT("Kitty"), MB_ICONINFORMATION);
 		exit(0);
 	}
 	return DefWindowProc(hwnd, msg, wp, lp);
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-	PSTR lpCmdLine, int nCmdShow) {
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
 	HWND hwnd;
 	MSG msg;
 	WNDCLASS winc;
@@ -23,16 +21,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	winc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	winc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	winc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	winc.lpszMenuName = NULL;
-	winc.lpszClassName = TEXT("KITTY");
+	winc.lpszMenuName = TEXT("MENUID");
+	winc.lpszClassName = TEXT("VIEWERMASTER");
 
 	if (!RegisterClass(&winc)) return 0;
 
+	//ウィンドウ作成
 	hwnd = CreateWindow(
-		TEXT("KITTY"), TEXT("Kitty on your lap"),
+		TEXT("ViewerMaster"),
+		TEXT("ViewerMaster"),
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		100, 100, 200, 200, NULL, NULL,
-		hInstance, NULL
+		100, 100, 800, 600, NULL, NULL, hInstance, NULL
 	);
 
 	if (hwnd == NULL) return 0;
