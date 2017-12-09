@@ -1,30 +1,38 @@
 #include<windows.h>
 #include<stdlib.h>
+#include "resource.h"
+
+//ウィンドウハンドル
+HWND hwnd;
+
+//インスタンスハンドル
+HINSTANCE hinst;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
-	if (msg == WM_LBUTTONUP) {
-		MessageBox(hwnd, TEXT("終わるにゃん"), TEXT("Kitty"), MB_ICONINFORMATION);
-		exit(0);
+	switch (msg) {
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
 	}
 	return DefWindowProc(hwnd, msg, wp, lp);
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
-	HWND hwnd;
 	MSG msg;
 	WNDCLASS winc;
 
-	winc.style = CS_HREDRAW | CS_VREDRAW;
-	winc.lpfnWndProc = WndProc;
-	winc.cbClsExtra = winc.cbWndExtra = 0;
-	winc.hInstance = hInstance;
-	winc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	winc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	winc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	winc.lpszMenuName = TEXT("MENUID");
-	winc.lpszClassName = TEXT("VIEWERMASTER");
+	winc.style = CS_HREDRAW | CS_VREDRAW;	//縦横の再描画をする
+	winc.lpfnWndProc = WndProc;	//ウィンドウプロージャの名前
+	winc.cbClsExtra = winc.cbWndExtra = 0;	//使わないから0かNULL
+	winc.hInstance = hInstance;	//インスタンスハンドル
+	winc.hIcon = winc.hCursor = NULL;	//NULLで問題ないはず
+	winc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);	//背景を白に設定
+	winc.lpszClassName = TEXT("VIEWERMASTER");	//クラス登録名
+	winc.lpszMenuName = TEXT("MENUID");	//	メニュー登録名
 
-	if (!RegisterClass(&winc)) return 0;
+	if (!RegisterClass(&winc)) {
+		return -1;
+	}
 
 	//ウィンドウ作成
 	hwnd = CreateWindow(
@@ -34,11 +42,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 		100, 100, 800, 600, NULL, NULL, hInstance, NULL
 	);
 
-	if (hwnd == NULL) return 0;
-
-	while (TRUE) {
-		GetMessage(&msg, NULL, 0, 0);
+	//エラーチェック
+	int check;
+	while (check = GetMessage(&msg, NULL, 0, 0)) {
+		if (check == -1) {
+			break;
+		}
 		DispatchMessage(&msg);
 	}
-	return 0;
+
+	//クラス解放
+	UnregisterClass("VIEWERMASTER", hinst);
 }
