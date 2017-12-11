@@ -28,5 +28,13 @@
     <ResourceCompile Include="Menu.rc">
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
+    <ResourceCompile Include="icon.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Pictures\ViewerMaster_icon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>
