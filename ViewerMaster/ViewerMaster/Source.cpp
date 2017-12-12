@@ -4,18 +4,16 @@
 
 #define MSG(m) {MessageBoxA(hwnd, m, NULL, MB_OK);}
 #define MSGnotice(m) {MessageBox(hwnd, m, TEXT("通知"), MB_OK);}
-#define btn_L_cnct 10001
-#define btn_L_discnct 10002
-#define btn_T_cnct 10003
-#define btn_T_discnct 10004
-#define btn_Y_cnct 10005
-#define btn_Y_discnct 10006
+
 
 //ハンドル
 HINSTANCE hinst;
 WNDCLASSEX wcex;
 HWND hwnd;
 MSG msg;
+
+//エディットハンドル
+static HWND hwnd_edit_L;
 
 //ボタンハンドル
 static HWND hwnd_btn_L_cnct, hwnd_btn_L_discnct;
@@ -90,7 +88,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	wcex.hInstance = hInstance;
 	wcex.hIcon = (HICON)LoadImage(hinst, "ICO_VM", IMAGE_ICON, 0, 0, LR_SHARED);
 	wcex.hCursor = NULL;
-	wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wcex.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
 	wcex.lpszClassName = TEXT("VIEWERMASTER");
 	wcex.lpszMenuName = TEXT("MENUID");
 	wcex.hIconSm = NULL;
@@ -119,6 +117,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 
 	hwnd = CreateWindowEx(WS_EX_LEFT, TEXT("VIEWERMASTER"), TEXT("ViewerMaster"), WS_VISIBLE | WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX,
 		100, 100, 800, 600, NULL, NULL, hinst, NULL
+	);
+
+	//エディットボックス
+	hwnd_edit_L = CreateWindowEx(WS_EX_LEFT, TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD,
+		100, 10, 550, 20, hwnd, (HMENU)edit_L, hInstance, NULL
+	);
+
+	hwnd_edit_L = CreateWindowEx(WS_EX_LEFT, TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD,
+		100, 40, 550, 20, hwnd, (HMENU)edit_T, hInstance, NULL
+	);
+
+	hwnd_edit_L = CreateWindowEx(WS_EX_LEFT, TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD,
+		100, 70, 550, 20, hwnd, (HMENU)edit_Y, hInstance, NULL
 	);
 
 	//ボタン

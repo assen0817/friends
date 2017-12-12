@@ -1,12 +1,24 @@
-#define Option     101
-#define Other      103
-#define Version    104
-#define Rule       105
+//アイコン
+#define ICO_VM 111
 
-#define OptionWindow	1001
-#define OtherWindow		1003
-#define VersionWindow	1004
-#define RuleWindow		1005
+//メニューバー
+#define Option     211
+#define Other      221
+#define Version    231
+#define Rule       232
 
-#define ICO_VM 11
+//エディットボックス
+#define edit_L 311
+#define edit_T 321
+#define edit_Y 331
+
+//ボタン
+#define btn_L_cnct 411
+#define btn_L_discnct 412
+#define btn_T_cnct 421
+#define btn_T_discnct 422
+#define btn_Y_cnct 431
+#define btn_Y_discnct 432
+
+
 
