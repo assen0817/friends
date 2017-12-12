@@ -117,8 +117,7 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="icon.rc" />
-    <ResourceCompile Include="Menu.rc" />
+    <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Pictures\ViewerMaster_icon.ico" />

@@ -11,6 +11,7 @@
 #define edit_L 311
 #define edit_T 321
 #define edit_Y 331
+#define Edit_Rule 341
 
 //ƒ{ƒ^ƒ“
 #define btn_L_cnct 411

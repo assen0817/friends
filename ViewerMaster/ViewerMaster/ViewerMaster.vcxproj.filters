@@ -25,10 +25,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Menu.rc">
-      <Filter>リソース ファイル</Filter>
-    </ResourceCompile>
-    <ResourceCompile Include="icon.rc">
+    <ResourceCompile Include="resource.rc">
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
   </ItemGroup>
