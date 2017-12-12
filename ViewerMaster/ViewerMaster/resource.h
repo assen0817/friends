@@ -1,5 +1,4 @@
 #define Option     101
-#define Exit       102
 #define Other      103
 #define Version    104
 #define Rule       105
@@ -9,5 +8,5 @@
 #define VersionWindow	1004
 #define RuleWindow		1005
 
-#define ICO_VM 201
+#define ICO_VM 11
 
