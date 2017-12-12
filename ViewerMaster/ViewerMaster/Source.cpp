@@ -6,11 +6,15 @@
 #define MSGnotice(m) {MessageBox(hwnd, m, TEXT("通知"), MB_OK);}
 
 
-//ハンドル
+//グローバルハンドル
 HINSTANCE hinst;
 WNDCLASSEX wcex;
 HWND hwnd;
 MSG msg;
+
+//テキストハンドル
+HDC hdc;
+PAINTSTRUCT ps;
 
 //エディットハンドル
 static HWND hwnd_edit_L;
@@ -28,6 +32,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
+	case WM_PAINT:
+		hdc = BeginPaint(hwnd, &ps);
+		TextOut(hdc, 10, 10, TEXT("LINE LIVE"), sizeof("LINE LIVE"));
+		TextOut(hdc, 10, 40, TEXT("Twitch"), sizeof("Twitch"));
+		TextOut(hdc, 10, 70, TEXT("YouTubeLIVE"), sizeof("YouTubeLIVE"));
+		EndPaint(hwnd, &ps);
+		return 0;
 	case WM_COMMAND:
 		switch (LOWORD(wp)) {
 		case Option:
@@ -39,22 +50,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 		case Rule:
 			return 0;
 		case btn_L_cnct:
-			MSGnotice("接続します");
+			MSGnotice("LINELIVEに接続します");
 			return 0;
 		case btn_L_discnct:
-			MSGnotice("切断しました");
+			MSGnotice("LINELIVEから切断しました");
 			return 0;
 		case btn_T_cnct:
-			MSGnotice("接続します");
+			MSGnotice("Twitchに接続します");
 			return 0;
 		case btn_T_discnct:
-			MSGnotice("切断しました");
+			MSGnotice("Twitchから切断しました");
 			return 0;
 		case btn_Y_cnct:
-			MSGnotice("接続します");
+			MSGnotice("YouTubeLIVEに接続します");
 			return 0;
 		case btn_Y_discnct:
-			MSGnotice("切断しました");
+			MSGnotice("YouTubeLIVEから切断しました");
 			return 0;
 		}
 	}
