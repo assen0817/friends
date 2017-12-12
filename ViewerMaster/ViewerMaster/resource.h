@@ -2,10 +2,10 @@
 #define ICO_VM 111
 
 //メニューバー
-#define Option     211
-#define Other      221
-#define Version    231
-#define Rule       232
+#define Option		211
+#define OtherWindow	221
+#define Version		231
+#define Rule		232
 
 //エディットボックス
 #define edit_L 311

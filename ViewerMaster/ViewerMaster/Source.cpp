@@ -18,13 +18,22 @@ PAINTSTRUCT ps;
 
 //エディットハンドル
 static HWND hwnd_edit_L;
+static HWND hwnd_edit_T;
+static HWND hwnd_edit_Y;
 
 //ボタンハンドル
 static HWND hwnd_btn_L_cnct, hwnd_btn_L_discnct;
 static HWND hwnd_btn_T_cnct, hwnd_btn_T_discnct;
 static HWND hwnd_btn_Y_cnct, hwnd_btn_Y_discnct;
 
-
+BOOL CALLBACK DialogProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
+	switch (msg) {
+	case WM_CLOSE:
+		EndDialog(hwnd, IDOK);
+		return TRUE;
+	}
+	return FALSE;
+}
 
 //親ウィンドウプログラム
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
@@ -42,12 +51,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 	case WM_COMMAND:
 		switch (LOWORD(wp)) {
 		case Option:
+			DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
+				TEXT("Dlog_Opt"), hwnd, DialogProc
+			);
 			return 0;
-		case Other:
+		case OtherWindow:
 			return 0;
 		case Version:
+			DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
+				TEXT("Dlog_Ver"), hwnd, DialogProc
+				);
 			return 0;
 		case Rule:
+			DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
+				TEXT("Dlog_Rule"), hwnd, DialogProc
+			);
 			return 0;
 		case btn_L_cnct:
 			MSGnotice("LINELIVEに接続します");
@@ -71,6 +89,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 	}
 	return DefWindowProc(hwnd, msg, wp, lp);
 }
+
 
 
 
@@ -131,15 +150,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	);
 
 	//エディットボックス
-	hwnd_edit_L = CreateWindowEx(WS_EX_LEFT, TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD,
+	hwnd_edit_L = CreateWindowA(TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD | ES_LEFT,
 		100, 10, 550, 20, hwnd, (HMENU)edit_L, hInstance, NULL
 	);
 
-	hwnd_edit_L = CreateWindowEx(WS_EX_LEFT, TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD,
+	hwnd_edit_T = CreateWindowA(TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD | ES_LEFT,
 		100, 40, 550, 20, hwnd, (HMENU)edit_T, hInstance, NULL
 	);
 
-	hwnd_edit_L = CreateWindowEx(WS_EX_LEFT, TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD,
+	hwnd_edit_Y = CreateWindowA(TEXT("edit"), NULL, WS_VISIBLE | WS_CHILD | ES_LEFT,
 		100, 70, 550, 20, hwnd, (HMENU)edit_Y, hInstance, NULL
 	);
 
@@ -177,7 +196,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 		return -1;
 	}
 
-	if (!hwnd_btn_L_cnct) {
+	if (hwnd_btn_L_cnct == NULL || hwnd_btn_L_discnct == NULL || hwnd_btn_T_cnct == NULL ||
+		hwnd_btn_T_discnct == NULL || hwnd_btn_Y_cnct == NULL || hwnd_btn_Y_discnct == NULL){
 		MSG("エラー : ボタン作成失敗");
 		return -1;
 	}
@@ -197,6 +217,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 		if (check == -1) {
 			break;
 		}
+		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
 
